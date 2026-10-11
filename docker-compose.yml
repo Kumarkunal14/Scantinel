@@ -1,0 +1,58 @@
+version: '3.9'
+
+services:
+  mongo:
+    image: mongo:7.0
+    container_name: scantinel-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - scantinel-net
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: scantinel-api
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - MONGO_URI=mongodb://mongo:27017/scantinel
+      - RATE_LIMIT_WINDOW_MS=900000
+      - RATE_LIMIT_MAX=20
+    depends_on:
+      mongo:
+        condition: service_healthy
+    networks:
+      - scantinel-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: scantinel-ui
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - scantinel-net
+
+networks:
+  scantinel-net:
+    driver: bridge
+
+volumes:
+  mongo_data:

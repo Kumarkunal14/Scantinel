@@ -1,0 +1,237 @@
+.scan-compare-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease both;
+}
+
+.scan-compare-modal {
+  background: var(--ink-2);
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-xl);
+  width: 100%;
+  max-width: 760px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: fadeUp 0.25s cubic-bezier(0.16,1,0.3,1) both;
+  box-shadow: var(--shadow-lg);
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────────── */
+.compare-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border-1);
+}
+.compare-header-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-1);
+}
+.compare-close {
+  background: none;
+  border: none;
+  color: var(--text-3);
+  font-size: 18px;
+  cursor: pointer;
+  transition: color 0.15s;
+  line-height: 1;
+}
+.compare-close:hover { color: var(--text-1); }
+
+/* ── Scan cards row ──────────────────────────────────────────────────────────── */
+.compare-scans-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border-1);
+  flex-wrap: wrap;
+}
+.compare-scan-card {
+  flex: 1;
+  min-width: 200px;
+  background: var(--ink-3);
+  border: 1px solid var(--border-1);
+  border-radius: var(--r-md);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.csc-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  font-weight: 700;
+  color: var(--text-4);
+}
+.csc-url {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.csc-date { font-size: 11px; color: var(--text-3); }
+
+.compare-grade-chip {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  border: 1px solid;
+  border-radius: var(--r-sm);
+  padding: 4px 10px;
+  width: fit-content;
+  margin-top: 4px;
+}
+.cgc-grade { font-family: var(--font-display); font-size: 22px; font-weight: 800; }
+.cgc-score { font-size: 12px; opacity: 0.7; }
+
+.compare-delta-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.compare-delta-badge span { font-family: var(--font-mono); }
+
+/* ── Tabs ─────────────────────────────────────────────────────────────────────── */
+.compare-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-1);
+  overflow-x: auto;
+}
+.compare-tab {
+  background: none;
+  border: none;
+  color: var(--text-3);
+  font-family: var(--font-body);
+  font-size: 13px;
+  padding: 12px 18px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.compare-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.compare-tab:hover:not(.active) { color: var(--text-1); }
+
+/* ── Body ─────────────────────────────────────────────────────────────────────── */
+.compare-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+/* Overview */
+.compare-overview-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.cos-card {
+  background: var(--ink-3);
+  border: 1px solid var(--border-1);
+  border-radius: var(--r-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+.cos-card.green { border-color: rgba(46,213,122,0.2); background: rgba(46,213,122,0.04); }
+.cos-card.red   { border-color: rgba(255,58,92,0.2);  background: rgba(255,58,92,0.04); }
+.cos-num { font-family: var(--font-display); font-size: 28px; font-weight: 800; color: var(--text-1); }
+.cos-label { font-size: 12px; color: var(--text-3); }
+
+/* Severity comparison table */
+.compare-sev-table { display: flex; flex-direction: column; gap: 4px; }
+.cst-header {
+  display: grid;
+  grid-template-columns: 80px 60px 24px 60px 80px;
+  gap: 8px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-4);
+  padding: 6px 10px;
+}
+.compare-sev-row {
+  display: grid;
+  grid-template-columns: 80px 60px 24px 60px 80px;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 10px;
+  background: var(--ink-3);
+  border-radius: var(--r-sm);
+  font-size: 13px;
+}
+.csr-label { font-weight: 600; font-size: 12px; }
+.csr-count { font-family: var(--font-mono); text-align: center; color: var(--text-2); }
+.csr-arrow { text-align: center; color: var(--text-4); }
+.csr-delta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+}
+.csr-delta.worse { color: var(--crit); }
+.csr-delta.better { color: var(--safe); }
+.csr-delta.same { color: var(--text-4); }
+
+/* Finding lists */
+.compare-finding-list { display: flex; flex-direction: column; gap: 6px; }
+.compare-finding-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--ink-3);
+  border: 1px solid var(--border-1);
+  border-radius: var(--r-sm);
+  font-size: 13px;
+}
+.compare-finding-row.fixed { border-color: rgba(46,213,122,0.15); }
+.compare-finding-row.new   { border-color: rgba(255,58,92,0.15); }
+.cfr-sev { font-size: 11px; font-weight: 700; text-transform: uppercase; flex-shrink: 0; }
+.cfr-title { color: var(--text-2); flex: 1; }
+
+.compare-empty {
+  text-align: center;
+  color: var(--text-3);
+  font-size: 14px;
+  padding: 40px;
+}
+
+@media (max-width: 600px) {
+  .compare-scans-row { flex-direction: column; }
+  .compare-grade-chip { font-size: 14px; }
+  .cst-header, .compare-sev-row { grid-template-columns: 60px 40px 20px 40px 60px; font-size: 11px; }
+  .compare-overview-summary { grid-template-columns: 1fr 1fr 1fr; }
+}
